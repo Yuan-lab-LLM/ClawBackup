@@ -1,0 +1,63 @@
+name: Sync Homebrew Tap
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+jobs:
+  sync-homebrew-tap:
+    if: ${{ secrets.HOMEBREW_TAP_TOKEN != '' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo at release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+
+      - name: Build source distribution
+        run: python -m build --sdist
+
+      - name: Checkout homebrew tap
+        uses: actions/checkout@v4
+        with:
+          repository: Huifu1018/homebrew-tap
+          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          path: homebrew-tap
+
+      - name: Render formula into tap repo
+        run: |
+          ARCHIVE="$(ls dist/clawbackup-*.tar.gz | head -n1)"
+          python scripts/render_homebrew_formula.py \
+            "$ARCHIVE" \
+            --github-repo Huifu1018/ClawBackup \
+            --tag "${{ github.event.release.tag_name }}" \
+            --output homebrew-tap/Formula/clawbackup.rb
+
+      - name: Commit and push formula update
+        working-directory: homebrew-tap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/clawbackup.rb
+          if git diff --cached --quiet; then
+            echo "No Homebrew formula changes to commit."
+            exit 0
+          fi
+          git commit -m "Update clawbackup for ${{ github.event.release.tag_name }}"
+          git push
+
