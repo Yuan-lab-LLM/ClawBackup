@@ -168,19 +168,15 @@ python3 scripts/render_homebrew_formula.py \
 
 ### GitHub Actions Homebrew Tap Sync
 
-项目还带了一份 Homebrew tap 自动同步工作流：
+Homebrew tap 同步现在已经并入同一个发布工作流：
 
 ```text
-.github/workflows/homebrew-tap-sync.yml
+.github/workflows/release.yml
 ```
 
-触发方式：
+当你推送 `v*` tag 时，这个工作流会先创建 GitHub Release，再继续：
 
-- GitHub Release 发布完成后自动触发
-
-这个工作流会自动：
-
-- 按 release tag 重新构建源码包
+- 按 tag 重新构建源码包
 - 生成最新的 `Formula/clawbackup.rb`
 - 推送到 `Huifu1018/homebrew-tap`
 
@@ -191,7 +187,7 @@ HOMEBREW_TAP_TOKEN
 ```
 
 这个 token 需要对 `Huifu1018/homebrew-tap` 有写权限。
-如果没有配置这个 secret，工作流会自动跳过 Homebrew tap 同步，不会影响 GitHub Release 本身。
+如果没有配置这个 secret，发布工作流会自动跳过 Homebrew tap 同步，不会影响 GitHub Release 本身。
 
 ## Run
 
