@@ -191,6 +191,7 @@ HOMEBREW_TAP_TOKEN
 ```
 
 这个 token 需要对 `Huifu1018/homebrew-tap` 有写权限。
+如果没有配置这个 secret，工作流会自动跳过 Homebrew tap 同步，不会影响 GitHub Release 本身。
 
 ## Run
 

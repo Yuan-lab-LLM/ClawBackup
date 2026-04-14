@@ -10,29 +10,45 @@ permissions:
 
 jobs:
   sync-homebrew-tap:
-    if: ${{ secrets.HOMEBREW_TAP_TOKEN != '' }}
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check tap token
+        id: token_check
+        env:
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          if [ -z "$HOMEBREW_TAP_TOKEN" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "HOMEBREW_TAP_TOKEN is not configured; skipping Homebrew tap sync."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout source repo at release tag
+        if: steps.token_check.outputs.enabled == 'true'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.release.tag_name }}
 
       - name: Set up Python
+        if: steps.token_check.outputs.enabled == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install build tools
+        if: steps.token_check.outputs.enabled == 'true'
         run: |
           python -m pip install --upgrade pip
           python -m pip install build
 
       - name: Build source distribution
+        if: steps.token_check.outputs.enabled == 'true'
         run: python -m build --sdist
 
       - name: Checkout homebrew tap
+        if: steps.token_check.outputs.enabled == 'true'
         uses: actions/checkout@v4
         with:
           repository: Huifu1018/homebrew-tap
@@ -40,6 +56,7 @@ jobs:
           path: homebrew-tap
 
       - name: Render formula into tap repo
+        if: steps.token_check.outputs.enabled == 'true'
         run: |
           ARCHIVE="$(ls dist/clawbackup-*.tar.gz | head -n1)"
           python scripts/render_homebrew_formula.py \
@@ -49,6 +66,7 @@ jobs:
             --output homebrew-tap/Formula/clawbackup.rb
 
       - name: Commit and push formula update
+        if: steps.token_check.outputs.enabled == 'true'
         working-directory: homebrew-tap
         run: |
           git config user.name "github-actions[bot]"
@@ -60,4 +78,3 @@ jobs:
           fi
           git commit -m "Update clawbackup for ${{ github.event.release.tag_name }}"
           git push
-
