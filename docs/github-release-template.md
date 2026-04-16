@@ -1,4 +1,4 @@
-# ClawBackup v0.2.0
+# ClawBackup v0.1.1
 
 ClawBackup 的首个公开版本，提供面向 OpenClaw 的本地备份 CLI。
 
@@ -26,10 +26,10 @@ brew install Huifu1018/tap/clawbackup
 
 ## Assets
 
-- `clawbackup-0.2.0.tar.gz`
+- `clawbackup-0.1.1.tar.gz`
 
 ## Notes
 
-- Release tag 使用 `v0.2.0`
+- Release tag 使用 `v0.1.1`
 - Homebrew 公式仓库建议使用 `Huifu1018/homebrew-tap`
 - 如果是手动发布 Homebrew，请同步更新对应版本的 `Formula/clawbackup.rb`
