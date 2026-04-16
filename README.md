@@ -43,25 +43,25 @@ python3 -m build --sdist
 
 2. 上传源码包到 GitHub Release
 
-建议把 `dist/clawbackup-0.1.0.tar.gz` 上传到：
+建议把 `dist/clawbackup-0.2.0.tar.gz` 上传到：
 
 ```text
-https://github.com/Huifu1018/ClawBackup/releases/download/v0.1.0/clawbackup-0.1.0.tar.gz
+https://github.com/Huifu1018/ClawBackup/releases/download/v0.2.0/clawbackup-0.2.0.tar.gz
 ```
 
 3. 计算源码包的 SHA256
 
 ```bash
-./scripts/homebrew_sha256.sh dist/clawbackup-0.1.0.tar.gz
+./scripts/homebrew_sha256.sh dist/clawbackup-0.2.0.tar.gz
 ```
 
 4. 生成正式发布用的 Homebrew 公式
 
 ```bash
 python3 scripts/render_homebrew_formula.py \
-  dist/clawbackup-0.1.0.tar.gz \
+  dist/clawbackup-0.2.0.tar.gz \
   --github-repo Huifu1018/ClawBackup \
-  --tag v0.1.0
+  --tag v0.2.0
 ```
 
 如果你不想自动生成，也可以手动改 `Formula/clawbackup.rb` 里的这几项：
@@ -94,7 +94,7 @@ docs/github-release-template.md
 
 ```bash
 python3 -m build --sdist
-python3 scripts/render_homebrew_formula.py dist/clawbackup-0.1.0.tar.gz
+python3 scripts/render_homebrew_formula.py dist/clawbackup-0.2.0.tar.gz
 ./scripts/test_homebrew_local.sh
 ```
 
@@ -111,7 +111,7 @@ python3 scripts/render_homebrew_formula.py dist/clawbackup-0.1.0.tar.gz
 1. 更新 `pyproject.toml` 里的版本号
 2. 确认 `src/clawbackup/__init__.py` 里的 `__version__` 一致
 3. 提交主项目仓库变更
-4. 创建 Git tag，命名统一使用 `v版本号`，例如 `v0.1.0`
+4. 创建 Git tag，命名统一使用 `v版本号`，例如 `v0.2.0`
 5. 推送 commit 和 tag 到 GitHub
 6. 等待 GitHub Actions 自动构建并上传 `dist/clawbackup-<version>.tar.gz` 到 GitHub Release
 7. 从 Release 页面或本地重新计算源码包的 SHA256
@@ -122,15 +122,15 @@ python3 scripts/render_homebrew_formula.py dist/clawbackup-0.1.0.tar.gz
 建议 Release tag 固定用这个格式：
 
 ```text
-v0.1.0
-v0.1.1
 v0.2.0
+v0.2.1
+v0.3.0
 ```
 
 对应的 GitHub Release 下载地址也保持同样规则：
 
 ```text
-https://github.com/Huifu1018/ClawBackup/releases/download/v0.1.0/clawbackup-0.1.0.tar.gz
+https://github.com/Huifu1018/ClawBackup/releases/download/v0.2.0/clawbackup-0.2.0.tar.gz
 ```
 
 建议最少执行这几条命令：
@@ -138,14 +138,14 @@ https://github.com/Huifu1018/ClawBackup/releases/download/v0.1.0/clawbackup-0.1.
 ```bash
 python3 -m py_compile clawbackup.py src/clawbackup/cli.py scripts/render_homebrew_formula.py
 git add .
-git commit -m "Release v0.1.0"
-git tag v0.1.0
+git commit -m "Release v0.2.0"
+git tag v0.2.0
 git push origin main --tags
-./scripts/homebrew_sha256.sh dist/clawbackup-0.1.0.tar.gz
+./scripts/homebrew_sha256.sh dist/clawbackup-0.2.0.tar.gz
 python3 scripts/render_homebrew_formula.py \
-  dist/clawbackup-0.1.0.tar.gz \
+  dist/clawbackup-0.2.0.tar.gz \
   --github-repo Huifu1018/ClawBackup \
-  --tag v0.1.0
+  --tag v0.2.0
 ```
 
 ### GitHub Actions Release
@@ -158,7 +158,7 @@ python3 scripts/render_homebrew_formula.py \
 
 触发方式：
 
-- 推送 `v*` tag，例如 `v0.1.0`
+- 推送 `v*` tag，例如 `v0.2.0`
 
 这个工作流会自动：
 
@@ -206,21 +206,27 @@ python3 -m clawbackup
 ```bash
 clawbackup init
 clawbackup backup
+clawbackup schedule
+clawbackup reset
+```
+
+高级命令仍然可用，但默认不用进主菜单：
+
+```bash
 clawbackup history
 clawbackup config
-clawbackup schedule
 clawbackup log
-clawbackup reset
 ```
 
 ## First Run
 
 ```bash
-clawbackup init
 clawbackup
 ```
 
-初始化完成后：
+第一次使用只要两步：
 
-- 先执行 `1` 立即备份，确认配置无误
-- 如果需要自动备份，再进入 `4` 定时任务配置频率
+- 先选 `1` 立即备份
+- 如果还没配置过，就在第二层选 `2` 编辑配置
+
+需要自动备份时，再回主菜单选 `2` 定时设置。
