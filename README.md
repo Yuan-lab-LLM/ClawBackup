@@ -119,10 +119,10 @@ python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 ```
 
-Close the current terminal, open a new one, then install the stable release:
+Close the current terminal, open a new one, then install the stable release directly from the wheel:
 
 ```bash
-pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
+pipx install "https://github.com/Yuan-lab-LLM/ClawBackup/releases/download/v0.1.1/clawbackup-0.1.1-py3-none-any.whl"
 ```
 
 Run:
@@ -149,6 +149,14 @@ or:
 
 ```bash
 pipx install .
+```
+
+### Install with `pip`
+
+If you prefer `pip` instead of `pipx`, install the published wheel directly:
+
+```bash
+python3 -m pip install "https://github.com/Yuan-lab-LLM/ClawBackup/releases/download/v0.1.1/clawbackup-0.1.1-py3-none-any.whl"
 ```
 
 ## First Run
@@ -204,7 +212,7 @@ pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@main"
 ### Upgrade or install a specific version
 
 ```bash
-pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
+pipx install --force "https://github.com/Yuan-lab-LLM/ClawBackup/releases/download/v0.1.1/clawbackup-0.1.1-py3-none-any.whl"
 ```
 
 ### Uninstall
