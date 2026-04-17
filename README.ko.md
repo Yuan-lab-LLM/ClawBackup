@@ -1,6 +1,10 @@
 # ClawBackup
 
 <p align="center">
+  <img src="./docs/assets/clawbackup-banner-fredoka2.png" alt="ClawBackup banner" width="920" />
+</p>
+
+<p align="center">
   OpenClaw 워크스페이스를 위한 로컬 백업 도구로, 빠른 초기 설정, 예약 백업, CLI 기반 복구 흐름을 간결하게 제공합니다.
 </p>
 

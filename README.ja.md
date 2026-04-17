@@ -1,6 +1,10 @@
 # ClawBackup
 
 <p align="center">
+  <img src="./docs/assets/clawbackup-banner-fredoka2.png" alt="ClawBackup banner" width="920" />
+</p>
+
+<p align="center">
   OpenClaw ワークスペース向けのローカルバックアップツール。初回セットアップ、定期バックアップ、CLI ベースの復元フローをわかりやすく提供します。
 </p>
 

@@ -1,6 +1,10 @@
 # ClawBackup
 
 <p align="center">
+  <img src="./docs/assets/clawbackup-banner-fredoka2.png" alt="ClawBackup banner" width="920" />
+</p>
+
+<p align="center">
   一个面向 OpenClaw 工作空间的本地备份工具，提供可直接上手的 CLI 界面、定时自动备份能力，以及适合个人用户与团队分发的标准安装方式。
 </p>
 

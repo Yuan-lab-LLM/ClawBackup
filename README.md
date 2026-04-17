@@ -1,6 +1,10 @@
 # ClawBackup
 
 <p align="center">
+  <img src="./docs/assets/clawbackup-banner-fredoka2.png" alt="ClawBackup banner" width="920" />
+</p>
+
+<p align="center">
   A local backup utility for OpenClaw workspaces, built for fast first-run setup, scheduled backups, and clean CLI-based recovery workflows.
 </p>
 
