@@ -1,195 +1,76 @@
 # ClawBackup
 
-OpenClaw 专属备份工具 CLI。
+ClawBackup 是一个面向 OpenClaw 的本地备份工具，提供简单的命令行界面，帮助用户快速完成以下事情：
+
+- 备份 OpenClaw 关键数据
+- 定时自动备份
+- 管理保留策略
+- 查看历史备份并恢复
+
+适合两类人：
+
+- 普通用户：希望快速备份 OpenClaw 工作目录，不想手动复制文件
+- 开发者 / 运维：希望把备份流程标准化，并通过 `pipx`、`pip` 或 Homebrew 分发
 
 License: `MIT`
 
-## Install
+## What It Backs Up
 
-推荐使用 `pipx`：
+默认会备份这些内容：
 
-```bash
-pipx install .
-```
+- `openclaw.json`：主配置文件
+- `credentials/`：API 密钥和令牌
+- `agents/`：Agent 配置和认证档案
+- `workspace/`：记忆、`SOUL.md`、用户文件
+- `cron/`：定时任务配置
 
-如果本机还没有 `pipx`：
+默认目录：
+
+- OpenClaw 数据目录：`~/.openclaw`
+- 备份输出目录：`~/openclaw-backups`
+- 压缩格式：`zip`
+- 默认保留策略：最近 `10` 份，最少保留 `3` 份，最多 `30` 天
+
+## Features
+
+- 首次启动支持语言选择：英 / 中 / 日 / 韩 / 德
+- 首页保留简洁主菜单，适合普通用户
+- 支持立即备份
+- 支持定时设置
+- 支持重置本地配置
+- 支持查看历史备份、配置管理、日志等高级命令
+- 支持 `pipx`、`pip`、Homebrew 安装
+
+## Quick Start
+
+### Option 1: Install with `pipx` (Recommended)
+
+先安装 `pipx`：
 
 ```bash
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 ```
 
-也可以直接用 `pip` 安装到当前环境：
+关闭并重新打开一个终端后，安装：
+
+```bash
+pipx install .
+```
+
+如果你是从 GitHub 安装某个版本：
+
+```bash
+pipx install "git+https://github.com/<owner>/ClawBackup.git@v0.1.0"
+```
+
+### Option 2: Install with `pip`
 
 ```bash
 python3 -m pip install .
 ```
 
-## Homebrew
-
-项目里已经带了一份 Homebrew 公式模板：
-
-```bash
-Formula/clawbackup.rb
-```
-
-发布到 Homebrew 的推荐流程：
-
-1. 先打源码包
-
-```bash
-python3 -m build --sdist
-```
-
-2. 上传源码包到 GitHub Release
-
-建议把 `dist/clawbackup-0.1.0.tar.gz` 上传到：
-
-```text
-https://github.com/Huifu1018/ClawBackup/releases/download/v0.1.0/clawbackup-0.1.0.tar.gz
-```
-
-3. 计算源码包的 SHA256
-
-```bash
-./scripts/homebrew_sha256.sh dist/clawbackup-0.1.0.tar.gz
-```
-
-4. 生成正式发布用的 Homebrew 公式
-
-```bash
-python3 scripts/render_homebrew_formula.py \
-  dist/clawbackup-0.1.0.tar.gz \
-  --github-repo Huifu1018/ClawBackup \
-  --tag v0.1.0
-```
-
-如果你不想自动生成，也可以手动改 `Formula/clawbackup.rb` 里的这几项：
-
-- `homepage`
-- `url`
-- `sha256`
-
-5. 把公式提交到你的 Homebrew tap 仓库
-
-完成后用户就可以这样安装：
-
-```bash
-brew install Huifu1018/tap/clawbackup
-```
-
-如果你要新建 `Huifu1018/homebrew-tap` 仓库，可以直接复用这份 README 模板：
-
-```text
-docs/homebrew-tap-README.md
-```
-
-如果你要发布 GitHub Release，也可以直接复用这份说明模板：
-
-```text
-docs/github-release-template.md
-```
-
-如果你想先在本机测试 Homebrew 安装，可以先准备源码包，然后自动生成一份本地可用的公式：
-
-```bash
-python3 -m build --sdist
-python3 scripts/render_homebrew_formula.py dist/clawbackup-0.1.0.tar.gz
-./scripts/test_homebrew_local.sh
-```
-
-说明：
-
-- 现在的 Homebrew 不接受直接从项目目录里的 `Formula/*.rb` 安装
-- 本地测试时，需要先把公式放进一个 tap
-- `scripts/test_homebrew_local.sh` 会自动把公式复制到一个本地 tap，再执行安装
-
-### Release Checklist
-
-每次发布新版本时，按这个顺序检查：
-
-1. 更新 `pyproject.toml` 里的版本号
-2. 确认 `src/clawbackup/__init__.py` 里的 `__version__` 一致
-3. 提交主项目仓库变更
-4. 创建 Git tag，命名统一使用 `v版本号`，例如 `v0.1.0`
-5. 推送 commit 和 tag 到 GitHub
-6. 等待 GitHub Actions 自动构建并上传 `dist/clawbackup-<version>.tar.gz` 到 GitHub Release
-7. 从 Release 页面或本地重新计算源码包的 SHA256
-8. 重新生成 `Formula/clawbackup.rb`
-9. 把公式同步到 `Huifu1018/homebrew-tap`
-10. 用 `brew install Huifu1018/tap/clawbackup` 做一次干净安装验证
-
-建议 Release tag 固定用这个格式：
-
-```text
-v0.1.0
-v0.1.0
-v0.1.2
-```
-
-对应的 GitHub Release 下载地址也保持同样规则：
-
-```text
-https://github.com/Huifu1018/ClawBackup/releases/download/v0.1.0/clawbackup-0.1.0.tar.gz
-```
-
-建议最少执行这几条命令：
-
-```bash
-python3 -m py_compile clawbackup.py src/clawbackup/cli.py scripts/render_homebrew_formula.py
-git add .
-git commit -m "Release v0.1.0"
-git tag v0.1.0
-git push origin main --tags
-./scripts/homebrew_sha256.sh dist/clawbackup-0.1.0.tar.gz
-python3 scripts/render_homebrew_formula.py \
-  dist/clawbackup-0.1.0.tar.gz \
-  --github-repo Huifu1018/ClawBackup \
-  --tag v0.1.0
-```
-
-### GitHub Actions Release
-
-项目已经带了自动发版工作流：
-
-```text
-.github/workflows/release.yml
-```
-
-触发方式：
-
-- 推送 `v*` tag，例如 `v0.1.0`
-
-这个工作流会自动：
-
-- 执行 Python 语法检查
-- 构建源码包 `dist/clawbackup-<version>.tar.gz`
-- 把源码包上传到对应的 GitHub Release
-
-### GitHub Actions Homebrew Tap Sync
-
-Homebrew tap 同步现在已经并入同一个发布工作流：
-
-```text
-.github/workflows/release.yml
-```
-
-当你推送 `v*` tag 时，这个工作流会先创建 GitHub Release，再继续：
-
-- 按 tag 重新构建源码包
-- 生成最新的 `Formula/clawbackup.rb`
-- 推送到 `Huifu1018/homebrew-tap`
-
-启用前需要先在 `Huifu1018/ClawBackup` 仓库里配置一个 GitHub Secret：
-
-```text
-HOMEBREW_TAP_TOKEN
-```
-
-这个 token 需要对 `Huifu1018/homebrew-tap` 有写权限。
-如果没有配置这个 secret，发布工作流会自动跳过 Homebrew tap 同步，不会影响 GitHub Release 本身。
-
-## Run
+### Run
 
 ```bash
 clawbackup
@@ -201,16 +82,47 @@ clawbackup
 python3 -m clawbackup
 ```
 
-## Direct commands
+## First Use
+
+第一次使用建议就按下面的顺序：
+
+1. 启动程序
+2. 如有需要，进入配置流程确认目录
+3. 执行第一次备份
+4. 如需自动备份，再设置定时任务
+
+最短路径：
 
 ```bash
+clawbackup
+```
+
+首页常用菜单：
+
+- `[1]` 立即备份
+- `[2]` 定时设置
+- `[3]` 重置配置
+- `[4]` 退出
+
+如果第一次还没配置好，进入 `[1]` 后可以继续选择：
+
+- `立即备份`
+- `编辑配置`
+- `返回`
+
+## Common Commands
+
+基础命令：
+
+```bash
+clawbackup
 clawbackup init
 clawbackup backup
 clawbackup schedule
 clawbackup reset
 ```
 
-高级命令仍然可用，但默认不用进主菜单：
+高级命令：
 
 ```bash
 clawbackup history
@@ -218,15 +130,144 @@ clawbackup config
 clawbackup log
 ```
 
-## First Run
+## Upgrade
+
+如果你用 `pipx` 安装并想升级到 GitHub 上的指定版本：
 
 ```bash
-clawbackup
+pipx install --force "git+https://github.com/<owner>/ClawBackup.git@v0.1.0"
 ```
 
-第一次使用只要两步：
+如果你用 `pip` 安装：
 
-- 先选 `1` 立即备份
-- 如果还没配置过，就在第二层选 `2` 编辑配置
+```bash
+python3 -m pip install --upgrade "git+https://github.com/<owner>/ClawBackup.git@v0.1.0"
+```
 
-需要自动备份时，再回主菜单选 `2` 定时设置。
+## Uninstall
+
+如果你用 `pipx` 安装：
+
+```bash
+pipx uninstall clawbackup
+```
+
+如果你用 `pip` 安装：
+
+```bash
+python3 -m pip uninstall clawbackup
+```
+
+## Configuration Files
+
+程序运行时会使用这些本地文件：
+
+- 配置文件：`~/.config/clawbackup/config.json`
+- 日志文件：`~/.config/clawbackup/clawbackup.log`
+
+## For Developers
+
+### Local Development
+
+运行本地源码：
+
+```bash
+python3 clawbackup.py
+```
+
+语法检查：
+
+```bash
+python3 -m py_compile clawbackup.py src/clawbackup/cli.py src/clawbackup/__init__.py
+```
+
+### Package Version
+
+版本号需要保持这两个地方一致：
+
+- `pyproject.toml`
+- `src/clawbackup/__init__.py`
+
+界面显示版本在：
+
+- `src/clawbackup/cli.py`
+
+## Homebrew
+
+项目里已经包含 Homebrew 公式模板：
+
+```text
+Formula/clawbackup.rb
+```
+
+发布到 Homebrew 的推荐流程：
+
+1. 构建源码包
+
+```bash
+python3 -m build --sdist
+```
+
+2. 计算 SHA256
+
+```bash
+./scripts/homebrew_sha256.sh dist/clawbackup-0.1.0.tar.gz
+```
+
+3. 生成公式
+
+```bash
+python3 scripts/render_homebrew_formula.py \
+  dist/clawbackup-0.1.0.tar.gz \
+  --github-repo Huifu1018/ClawBackup \
+  --tag v0.1.0
+```
+
+4. 提交到你的 Homebrew tap 仓库
+
+项目里还附带这些辅助文件：
+
+- `docs/homebrew-tap-README.md`
+- `docs/github-release-template.md`
+- `scripts/test_homebrew_local.sh`
+
+## Release Checklist
+
+每次发版建议按这个顺序走：
+
+1. 更新 `pyproject.toml` 版本号
+2. 更新 `src/clawbackup/__init__.py` 的 `__version__`
+3. 更新界面中的版本显示
+4. 提交代码
+5. 创建 tag，例如 `v0.1.0`
+6. 推送 `main` 和 tag
+7. 检查 GitHub Release
+8. 如需 Homebrew，再更新 `Formula/clawbackup.rb`
+
+常用命令：
+
+```bash
+git add .
+git commit -m "Release v0.1.0"
+git tag v0.1.0
+git push origin main --tags
+```
+
+## GitHub Actions
+
+项目已经带了自动发布工作流：
+
+```text
+.github/workflows/release.yml
+```
+
+触发方式：
+
+- 推送 `v*` tag，例如 `v0.1.0`
+
+这个工作流会自动：
+
+- 执行语法检查
+- 构建源码包
+- 创建 GitHub Release
+- 在配置了 `HOMEBREW_TAP_TOKEN` 时同步 Homebrew formula
