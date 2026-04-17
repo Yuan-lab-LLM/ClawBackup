@@ -1,118 +1,181 @@
 # ClawBackup
 
-ClawBackup 是一个面向 OpenClaw 的本地备份工具，提供简单的命令行界面，帮助用户快速完成以下事情：
+<p align="center">
+  A local backup utility for OpenClaw workspaces, built for fast first-run setup, scheduled backups, and clean CLI-based recovery workflows.
+</p>
 
-- 备份 OpenClaw 关键数据
-- 定时自动备份
-- 管理保留策略
-- 查看历史备份并恢复
+<p align="center">
+  <strong>Languages:</strong>
+  English |
+  <a href="./README.zh-CN.md">简体中文</a> |
+  <a href="./README.ja.md">日本語</a> |
+  <a href="./README.ko.md">한국어</a> |
+  <a href="./README.de.md">Deutsch</a>
+</p>
 
-适合两类人：
+<p align="center">
+  <img src="https://img.shields.io/badge/OpenClaw-Backup%20Utility-ff7b72?style=for-the-badge" alt="OpenClaw Backup Utility" />
+  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.10+" />
+  <img src="https://img.shields.io/badge/CLI-Multilingual-00c2d1?style=for-the-badge" alt="CLI Multilingual" />
+  <img src="https://img.shields.io/badge/License-MIT-2ea44f?style=for-the-badge" alt="MIT License" />
+</p>
 
-- 普通用户：希望快速备份 OpenClaw 工作目录，不想手动复制文件
-- 开发者 / 运维：希望把备份流程标准化，并通过 `pipx`、`pip` 或 Homebrew 分发
+<p align="center">
+  <a href="#why-clawbackup">Why ClawBackup</a> |
+  <a href="#what-it-backs-up">What It Backs Up</a> |
+  <a href="#core-capabilities">Core Capabilities</a> |
+  <a href="#quick-start">Quick Start</a> |
+  <a href="#first-run">First Run</a> |
+  <a href="#development-and-release">Development & Release</a>
+</p>
 
-License: `MIT`
+## Why ClawBackup
+
+An OpenClaw workspace usually contains more than just one config file. It often includes credentials, agent profiles, memory files, workspace data, and scheduled tasks. Copying these files manually is easy once, but hard to keep consistent over time.
+
+ClawBackup is designed to make local backup simple and repeatable:
+
+- complete the first backup with a clean CLI flow
+- enable scheduled backups without heavy setup
+- review, restore, or remove old archives when needed
+- install and distribute it using standard Python packaging workflows
+
+ClawBackup fits especially well for:
+
+- individual OpenClaw users who want dependable local backups
+- users who frequently edit agent configuration and want rollback safety
+- teams that want a standardized backup utility instead of manual file copy steps
 
 ## What It Backs Up
 
-默认会备份这些内容：
+By default, ClawBackup backs up these OpenClaw files and directories:
 
-- `openclaw.json`：主配置文件
-- `credentials/`：API 密钥和令牌
-- `agents/`：Agent 配置和认证档案
-- `workspace/`：记忆、`SOUL.md`、用户文件
-- `cron/`：定时任务配置
+- `openclaw.json`: main config file
+- `credentials/`: API keys and tokens
+- `agents/`: agent configs and auth profiles
+- `workspace/`: memory files, `SOUL.md`, and user files
+- `cron/`: scheduled task configuration
 
-默认目录：
+Default paths:
 
-- OpenClaw 数据目录：`~/.openclaw`
-- 备份输出目录：`~/openclaw-backups`
-- 压缩格式：`zip`
-- 默认保留策略：最近 `10` 份，最少保留 `3` 份，最多 `30` 天
+- OpenClaw data directory: `~/.openclaw`
+- Backup output directory: `~/openclaw-backups`
+- Compression format: `zip`
+- Default retention policy: keep latest `10`, keep at least `3`, remove anything older than `30` days
 
-## Features
+## Core Capabilities
 
-- 首次启动支持语言选择：英 / 中 / 日 / 韩 / 德
-- 首页保留简洁主菜单，适合普通用户
-- 支持立即备份
-- 支持定时设置
-- 支持重置本地配置
-- 支持查看历史备份、配置管理、日志等高级命令
-- 支持 `pipx`、`pip`、Homebrew 安装
+### Clean user-first CLI
+
+The default home screen keeps the main workflow focused on four high-frequency actions:
+
+- Back Up Now
+- Schedule
+- Reset Config
+- Exit
+
+Advanced commands such as history, config inspection, and logs are still available from the CLI, but they do not overload the first screen.
+
+### Multilingual startup
+
+The app currently supports:
+
+- English
+- Simplified Chinese
+- Japanese
+- Korean
+- German
+
+### Scheduled backups
+
+Built-in scheduling presets include:
+
+- every 6 hours
+- daily at 02:00
+- every Sunday at 02:00
+- monthly on day 1 at 02:00
+- custom cron expressions
+
+### Retention control
+
+ClawBackup supports both “keep all backups” and “keep only the latest N backups” retention strategies.
+
+### History and restore
+
+For generated archives, ClawBackup supports:
+
+- browsing backup history
+- restoring a selected backup
+- deleting a single backup archive
 
 ## Quick Start
 
-### Option 1: Install with `pipx` (Recommended)
+### Recommended: install with `pipx`
 
-先安装 `pipx`：
+If `pipx` is not installed yet:
 
 ```bash
 python3 -m pip install --user pipx
 python3 -m pipx ensurepath
 ```
 
-关闭并重新打开一个终端后，安装：
+Close the current terminal, open a new one, then install the stable release:
 
 ```bash
-pipx install .
+pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
 ```
 
-如果你是从 GitHub 安装某个版本：
+Run:
 
 ```bash
-pipx install "git+https://github.com/<owner>/ClawBackup.git@v0.1.0"
+clawbackup
 ```
 
-### Option 2: Install with `pip`
+### Install the latest code from `main`
+
+```bash
+pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@main"
+```
+
+### Install from local source
+
+If you already cloned the repository:
 
 ```bash
 python3 -m pip install .
 ```
 
-### Run
+or:
+
+```bash
+pipx install .
+```
+
+## First Run
+
+Recommended first-run flow:
+
+1. launch `clawbackup`
+2. confirm or adjust the source and backup directories
+3. run the first backup
+4. configure scheduling only if you want automatic execution
+
+Shortest path:
 
 ```bash
 clawbackup
 ```
 
-也支持模块方式：
+If you prefer direct commands:
 
 ```bash
-python3 -m clawbackup
+clawbackup init
+clawbackup backup
 ```
-
-## First Use
-
-第一次使用建议就按下面的顺序：
-
-1. 启动程序
-2. 如有需要，进入配置流程确认目录
-3. 执行第一次备份
-4. 如需自动备份，再设置定时任务
-
-最短路径：
-
-```bash
-clawbackup
-```
-
-首页常用菜单：
-
-- `[1]` 立即备份
-- `[2]` 定时设置
-- `[3]` 重置配置
-- `[4]` 退出
-
-如果第一次还没配置好，进入 `[1]` 后可以继续选择：
-
-- `立即备份`
-- `编辑配置`
-- `返回`
 
 ## Common Commands
 
-基础命令：
+### Main workflow
 
 ```bash
 clawbackup
@@ -122,7 +185,7 @@ clawbackup schedule
 clawbackup reset
 ```
 
-高级命令：
+### Advanced commands
 
 ```bash
 clawbackup history
@@ -130,121 +193,92 @@ clawbackup config
 clawbackup log
 ```
 
-## Upgrade
+## Upgrade and Uninstall
 
-如果你用 `pipx` 安装并想升级到 GitHub 上的指定版本：
-
-```bash
-pipx install --force "git+https://github.com/<owner>/ClawBackup.git@v0.1.0"
-```
-
-如果你用 `pip` 安装：
+### Upgrade to the latest main branch
 
 ```bash
-python3 -m pip install --upgrade "git+https://github.com/<owner>/ClawBackup.git@v0.1.0"
+pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@main"
 ```
 
-## Uninstall
+### Upgrade or install a specific version
 
-如果你用 `pipx` 安装：
+```bash
+pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+```
+
+### Uninstall
+
+If installed with `pipx`:
 
 ```bash
 pipx uninstall clawbackup
 ```
 
-如果你用 `pip` 安装：
+If installed with `pip`:
 
 ```bash
 python3 -m pip uninstall clawbackup
 ```
 
-## Configuration Files
+## Local Files
 
-程序运行时会使用这些本地文件：
+Runtime files:
 
-- 配置文件：`~/.config/clawbackup/config.json`
-- 日志文件：`~/.config/clawbackup/clawbackup.log`
+- config file: `~/.config/clawbackup/config.json`
+- log file: `~/.config/clawbackup/clawbackup.log`
 
-## For Developers
+If you want to fully reset local state, use the in-app reset flow or remove the config file manually.
 
-### Local Development
+## Development and Release
 
-运行本地源码：
+### Run locally
 
 ```bash
 python3 clawbackup.py
 ```
 
-语法检查：
+or:
+
+```bash
+python3 -m clawbackup
+```
+
+### Syntax check
 
 ```bash
 python3 -m py_compile clawbackup.py src/clawbackup/cli.py src/clawbackup/__init__.py
 ```
 
-### Package Version
+### Version locations
 
-版本号需要保持这两个地方一致：
+Before release, keep these locations aligned:
 
 - `pyproject.toml`
 - `src/clawbackup/__init__.py`
+- UI version text inside `src/clawbackup/cli.py`
 
-界面显示版本在：
+### Homebrew files
 
-- `src/clawbackup/cli.py`
+The repository already contains Homebrew-related files:
 
-## Homebrew
-
-项目里已经包含 Homebrew 公式模板：
-
-```text
-Formula/clawbackup.rb
-```
-
-发布到 Homebrew 的推荐流程：
-
-1. 构建源码包
-
-```bash
-python3 -m build --sdist
-```
-
-2. 计算 SHA256
-
-```bash
-./scripts/homebrew_sha256.sh dist/clawbackup-0.1.0.tar.gz
-```
-
-3. 生成公式
-
-```bash
-python3 scripts/render_homebrew_formula.py \
-  dist/clawbackup-0.1.0.tar.gz \
-  --github-repo Huifu1018/ClawBackup \
-  --tag v0.1.0
-```
-
-4. 提交到你的 Homebrew tap 仓库
-
-项目里还附带这些辅助文件：
-
-- `docs/homebrew-tap-README.md`
-- `docs/github-release-template.md`
+- `Formula/clawbackup.rb`
+- `scripts/render_homebrew_formula.py`
+- `scripts/homebrew_sha256.sh`
 - `scripts/test_homebrew_local.sh`
 
-## Release Checklist
+### Release checklist
 
-每次发版建议按这个顺序走：
+Recommended release flow:
 
-1. 更新 `pyproject.toml` 版本号
-2. 更新 `src/clawbackup/__init__.py` 的 `__version__`
-3. 更新界面中的版本显示
-4. 提交代码
-5. 创建 tag，例如 `v0.1.0`
-6. 推送 `main` 和 tag
-7. 检查 GitHub Release
-8. 如需 Homebrew，再更新 `Formula/clawbackup.rb`
+1. update version numbers
+2. commit changes
+3. create a tag such as `v0.1.0`
+4. push `main` and the tag
+5. verify the GitHub Release
+6. sync the Homebrew formula if needed
 
-常用命令：
+Common commands:
 
 ```bash
 git add .
@@ -253,21 +287,10 @@ git tag v0.1.0
 git push origin main --tags
 ```
 
-## GitHub Actions
+## License
 
-项目已经带了自动发布工作流：
+This project is released under the MIT License.
 
-```text
-.github/workflows/release.yml
-```
+## Contributing
 
-触发方式：
-
-- 推送 `v*` tag，例如 `v0.1.0`
-
-这个工作流会自动：
-
-- 执行语法检查
-- 构建源码包
-- 创建 GitHub Release
-- 在配置了 `HOMEBREW_TAP_TOKEN` 时同步 Homebrew formula
+Issues and pull requests are welcome, especially around OpenClaw backup flows, restore workflows, and scheduling improvements.
