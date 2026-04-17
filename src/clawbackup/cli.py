@@ -472,7 +472,7 @@ def _build_clawbackup_banner() -> Group:
         t.append("CLAWBACKUP", style="bold #ff6d67")
         sub = Text()
         sub.append(f"{tr('brand_tagline')}  ", style=MUTED)
-        sub.append("v0.1.1", style=f"bold {ACCENT}")
+        sub.append("v0.1", style=f"bold {ACCENT}")
         return Group(align_center(t), align_center(sub))
 
     claw_lines = [
@@ -509,7 +509,7 @@ def _build_clawbackup_banner() -> Group:
     brand.append("🦞", style="bold #ff6d67")
     brand.append("  ClawBackup", style=f"bold {TEXT_DARK}")
     brand.append("  ", style="")
-    brand.append("v0.1.1", style=f"bold {ACCENT}")
+    brand.append("v0.1", style=f"bold {ACCENT}")
     brand.append("  ", style="")
     brand.append(tr("brand_tagline"), style=MUTED)
     lines.append(Text(""))

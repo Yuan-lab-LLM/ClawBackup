@@ -3,7 +3,7 @@ class Clawbackup < Formula
 
   desc "OpenClaw backup utility CLI"
   homepage "https://github.com/Huifu1018/ClawBackup"
-  url "https://github.com/Huifu1018/ClawBackup/releases/download/v0.1.1/clawbackup-0.1.1.tar.gz"
+  url "https://github.com/Huifu1018/ClawBackup/releases/download/v0.1.0/clawbackup-0.1.0.tar.gz"
   sha256 "371d4287a9cbfa6fc772c1ccbc711a91d1f3ab1f1fa402193b0f7bf7940136e2"
   license "MIT"
 
