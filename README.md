@@ -122,7 +122,7 @@ python3 -m pipx ensurepath
 Close the current terminal, open a new one, then install the stable release:
 
 ```bash
-pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 Run:
@@ -204,7 +204,7 @@ pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@main"
 ### Upgrade or install a specific version
 
 ```bash
-pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 ### Uninstall
@@ -273,7 +273,7 @@ Recommended release flow:
 
 1. update version numbers
 2. commit changes
-3. create a tag such as `v0.1.0`
+3. create a tag such as `v0.1.1`
 4. push `main` and the tag
 5. verify the GitHub Release
 6. sync the Homebrew formula if needed
@@ -282,8 +282,8 @@ Common commands:
 
 ```bash
 git add .
-git commit -m "Release v0.1.0"
-git tag v0.1.0
+git commit -m "Release v0.1.1"
+git tag v0.1.1
 git push origin main --tags
 ```
 

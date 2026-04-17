@@ -122,7 +122,7 @@ python3 -m pipx ensurepath
 터미널을 다시 연 뒤 안정 버전 설치:
 
 ```bash
-pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 실행:
@@ -202,7 +202,7 @@ pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@main"
 ### 특정 버전 설치 또는 업그레이드
 
 ```bash
-pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 ### 제거
@@ -267,15 +267,15 @@ python3 -m py_compile clawbackup.py src/clawbackup/cli.py src/clawbackup/__init_
 
 1. 버전 번호 수정
 2. 커밋
-3. `v0.1.0` 같은 tag 생성
+3. `v0.1.1` 같은 tag 생성
 4. `main` 과 tag 푸시
 5. GitHub Release 확인
 6. 필요하면 Homebrew formula 동기화
 
 ```bash
 git add .
-git commit -m "Release v0.1.0"
-git tag v0.1.0
+git commit -m "Release v0.1.1"
+git tag v0.1.1
 git push origin main --tags
 ```
 

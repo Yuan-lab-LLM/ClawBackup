@@ -75,8 +75,8 @@ def main() -> None:
     )
     parser.add_argument(
         "--tag",
-        default="v0.1.0",
-        help="Release tag to use with --github-repo. Default: v0.1.0",
+        default="v0.1.1",
+        help="Release tag to use with --github-repo. Default: v0.1.1",
     )
     parser.add_argument(
         "--output",

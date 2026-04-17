@@ -122,7 +122,7 @@ python3 -m pipx ensurepath
 ターミナルを開き直した後、安定版をインストール:
 
 ```bash
-pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 実行:
@@ -202,7 +202,7 @@ pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@main"
 ### 特定バージョンを導入
 
 ```bash
-pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 ### アンインストール
@@ -269,15 +269,15 @@ python3 -m py_compile clawbackup.py src/clawbackup/cli.py src/clawbackup/__init_
 
 1. バージョン番号更新
 2. コミット
-3. `v0.1.0` のような tag 作成
+3. `v0.1.1` のような tag 作成
 4. `main` と tag を push
 5. GitHub Release を確認
 6. 必要なら Homebrew formula を同期
 
 ```bash
 git add .
-git commit -m "Release v0.1.0"
-git tag v0.1.0
+git commit -m "Release v0.1.1"
+git tag v0.1.1
 git push origin main --tags
 ```
 

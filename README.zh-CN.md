@@ -122,7 +122,7 @@ python3 -m pipx ensurepath
 关闭当前终端，重新打开一个新终端后，安装稳定版：
 
 ```bash
-pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 安装完成后直接运行：
@@ -206,7 +206,7 @@ pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@main"
 ### 升级到指定版本
 
 ```bash
-pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.0"
+pipx install --force "git+https://github.com/Yuan-lab-LLM/ClawBackup.git@v0.1.1"
 ```
 
 ### 卸载
@@ -275,7 +275,7 @@ python3 -m py_compile clawbackup.py src/clawbackup/cli.py src/clawbackup/__init_
 
 1. 更新版本号
 2. 提交代码
-3. 创建 tag，例如 `v0.1.0`
+3. 创建 tag，例如 `v0.1.1`
 4. 推送 `main` 与 tag
 5. 检查 GitHub Release
 6. 如需 Homebrew，再同步公式
@@ -284,8 +284,8 @@ python3 -m py_compile clawbackup.py src/clawbackup/cli.py src/clawbackup/__init_
 
 ```bash
 git add .
-git commit -m "Release v0.1.0"
-git tag v0.1.0
+git commit -m "Release v0.1.1"
+git tag v0.1.1
 git push origin main --tags
 ```
 

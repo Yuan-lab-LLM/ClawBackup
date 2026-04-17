@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-DIST_ARCHIVE="$ROOT/dist/clawbackup-0.1.0.tar.gz"
+DIST_ARCHIVE="$ROOT/dist/clawbackup-0.1.1.tar.gz"
 TAP_NAME="${1:-local/clawbackup}"
 
 if [[ ! -f "$DIST_ARCHIVE" ]]; then
