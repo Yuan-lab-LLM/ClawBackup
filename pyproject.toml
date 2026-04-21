@@ -5,15 +5,40 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "clawbackup"
 version = "0.1.1"
-description = "OpenClaw backup utility CLI"
+description = "A local backup utility for OpenClaw workspaces"
 readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+authors = [
+  { name = "Yuan Lab LLM" },
+]
+keywords = ["openclaw", "backup", "cli", "workspace", "restore"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Information Technology",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: System :: Archiving :: Backup",
+  "Topic :: Utilities",
+]
 dependencies = [
   "rich>=13.7.0",
 ]
 
 [project.scripts]
 clawbackup = "clawbackup.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Yuan-lab-LLM/ClawBackup"
+Repository = "https://github.com/Yuan-lab-LLM/ClawBackup"
+Issues = "https://github.com/Yuan-lab-LLM/ClawBackup/issues"
+Changelog = "https://github.com/Yuan-lab-LLM/ClawBackup/releases"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

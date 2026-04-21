@@ -1,7 +1,7 @@
 # ClawBackup
 
 <p align="center">
-  <img src="./docs/assets/clawbackup-banner-fredoka2.png" alt="ClawBackup banner" width="920" />
+  <img src="https://raw.githubusercontent.com/Yuan-lab-LLM/ClawBackup/main/docs/assets/clawbackup-banner-fredoka2.png" alt="ClawBackup banner" width="920" />
 </p>
 
 <p align="center">
@@ -129,6 +129,12 @@ Close the current terminal, open a new one, then install the stable release dire
 pipx install "https://github.com/Yuan-lab-LLM/ClawBackup/releases/download/v0.1.1/clawbackup-0.1.1-py3-none-any.whl"
 ```
 
+After the project is published to PyPI, the same install becomes:
+
+```bash
+pipx install clawbackup
+```
+
 Run:
 
 ```bash
@@ -161,6 +167,12 @@ If you prefer `pip` instead of `pipx`, install the published wheel directly:
 
 ```bash
 python3 -m pip install "https://github.com/Yuan-lab-LLM/ClawBackup/releases/download/v0.1.1/clawbackup-0.1.1-py3-none-any.whl"
+```
+
+After PyPI publishing is enabled, users can also install with:
+
+```bash
+python3 -m pip install clawbackup
 ```
 
 ## First Run
@@ -297,6 +309,39 @@ git add .
 git commit -m "Release v0.1.1"
 git tag v0.1.1
 git push origin main --tags
+```
+
+### Publish to PyPI
+
+This repository is prepared for PyPI publishing through GitHub Actions trusted publishing.
+
+Before the first publish:
+
+1. create the `clawbackup` project on PyPI
+2. in PyPI project settings, add a trusted publisher for:
+   - owner: `Yuan-lab-LLM`
+   - repository: `ClawBackup`
+   - workflow: `publish-pypi.yml`
+   - environment: `pypi`
+3. in GitHub, approve the `pypi` environment if your org requires environment review
+
+After that, the publish flow is:
+
+1. build and verify the package locally if needed
+2. create and push a release tag such as `v0.1.2`
+3. open GitHub Actions and run the `Publish PyPI` workflow, or trigger it from a published release
+4. verify the package on PyPI
+
+Once PyPI publishing is live, end users can install with:
+
+```bash
+pipx install clawbackup
+```
+
+or:
+
+```bash
+python3 -m pip install clawbackup
 ```
 
 ## License
