@@ -29,6 +29,7 @@
   <a href="#what-it-backs-up">What It Backs Up</a> |
   <a href="#core-capabilities">Core Capabilities</a> |
   <a href="#quick-start">Quick Start</a> |
+  <a href="#container-package">Container Package</a> |
   <a href="#first-run">First Run</a> |
   <a href="#development-and-release">Development & Release</a>
 </p>
@@ -173,6 +174,22 @@ After PyPI publishing is enabled, users can also install with:
 
 ```bash
 python3 -m pip install clawbackup
+```
+
+## Container Package
+
+This repository also publishes a container package to GitHub Container Registry so the GitHub repository `Packages` panel shows a package entry.
+
+Container image:
+
+```bash
+ghcr.io/yuan-lab-llm/clawbackup:latest
+```
+
+Run:
+
+```bash
+docker run --rm -it ghcr.io/yuan-lab-llm/clawbackup:latest
 ```
 
 ## First Run
